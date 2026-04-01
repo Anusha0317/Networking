@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Staff Dashboard</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<a href="index.html">⬅ Back</a>
+
+<h2>Staff Dashboard</h2>
+
+<hr>
+
+<h3>Create New Parcel</h3>
+
+<input id="pid" placeholder="Parcel ID">
+<input id="name" placeholder="Parcel Name">
+
+<button onclick="addParcel()">Add Parcel</button>
+
+<hr>
+
+<h3>Update Parcel Status</h3>
+
+<input id="updateId" placeholder="Enter Parcel ID">
+
+<select id="updateStatus">
+  <option>In Transit</option>
+  <option>Out for Delivery</option>
+  <option>Delivered</option>
+</select>
+
+<button onclick="updateParcel()">Update Status</button>
+
+<hr>
+
+<h3>All Parcels</h3>
+<div id="list"></div>
+
+<script src="staff.js"></script>
+
+</body>
+</html>
