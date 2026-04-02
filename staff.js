@@ -77,6 +77,5 @@ async function deleteParcel() {
 
   loadParcels();
 }
-
 // AUTO LOAD
 loadParcels();
