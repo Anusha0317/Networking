@@ -78,3 +78,16 @@ def track(pid):
 
 
 app.run(debug=True)
+
+# DELETE PARCEL
+@app.route("/delete/<pid>", methods=["DELETE"])
+def delete(pid):
+    conn = sqlite3.connect("database.db")
+    cursor = conn.cursor()
+    
+    cursor.execute("DELETE FROM parcels WHERE parcel_id=?", (pid,))
+    
+    conn.commit()
+    conn.close()
+    
+    return jsonify({"message": "Deleted"})
