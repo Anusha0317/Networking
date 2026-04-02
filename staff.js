@@ -59,5 +59,24 @@ async function updateParcel() {
   loadParcels();
 }
 
+// DELETE PARCEL
+async function deleteParcel() {
+
+  let id = document.getElementById("deleteId").value;
+
+  if (id === "") {
+    alert("Enter Parcel ID");
+    return;
+  }
+
+  await fetch("http://127.0.0.1:5000/delete/" + id, {
+    method: "DELETE"
+  });
+
+  alert("Parcel deleted successfully");
+
+  loadParcels();
+}
+
 // AUTO LOAD
 loadParcels();
