@@ -11,53 +11,93 @@ async function addParcel() {
     return;
   }
 
-  await fetch(API + "/add", {
-    method: "POST",
-    headers: {"Content-Type": "application/json"},
-    body: JSON.stringify({ parcel_id: id, name: name, status: "New" })
-  });
+  try {
+    let res = await fetch(API + "/add", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        parcel_id: id,
+        name: name,
+        status: "New"
+      })
+    });
 
-  alert("Parcel added successfully");
+    let data = await res.json();
 
-  loadParcels();
+    alert(data.message || "Parcel added successfully");
+
+    document.getElementById("pid").value = "";
+    document.getElementById("name").value = "";
+
+    loadParcels();
+
+  } catch (error) {
+    console.log(error);
+    alert("Error adding parcel");
+  }
 }
 
 
 // LOAD PARCELS
 async function loadParcels() {
 
-  let res = await fetch(API + "/parcels");
-  let data = await res.json();
+  try {
+    let res = await fetch(API + "/parcels");
+    let data = await res.json();
 
-  let text = "";
+    let text = "";
 
-  for (let i = 0; i < data.length; i++) {
+    for (let i = 0; i < data.length; i++) {
 
-    text += data[i].parcel_id + " - " +
-            data[i].name + " - " +
-            data[i].status + "<br>";
+      let statusColor = "black";
+
+      if (data[i].status === "Delivered") statusColor = "green";
+      else if (data[i].status === "In Transit") statusColor = "orange";
+
+      text += `<span style="color:${statusColor}">
+                ${data[i].parcel_id} - ${data[i].name} - ${data[i].status}
+               </span><br>`;
+    }
+
+    document.getElementById("list").innerHTML = text;
+
+  } catch (error) {
+    console.log(error);
+    alert("Error loading parcels");
   }
-
-  document.getElementById("list").innerHTML = text;
 }
 
 
-// UPDATE STATUS
+// UPDATE PARCEL
 async function updateParcel() {
 
   let id = document.getElementById("updateId").value;
   let status = document.getElementById("updateStatus").value;
 
-  await fetch(API + "/update/" + id, {
-    method: "PUT",
-    headers: {"Content-Type": "application/json"},
-    body: JSON.stringify({ status: status })
-  });
+  if (id === "") {
+    alert("Enter Parcel ID");
+    return;
+  }
 
-  alert("Status updated successfully");
+  try {
+    let res = await fetch(API + "/update/" + id, {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ status: status })
+    });
 
-  loadParcels();
+    let data = await res.json();
+
+    alert(data.message || "Status updated successfully");
+
+    loadParcels();
+
+  } catch (error) {
+    console.log(error);
+    alert("Error updating parcel");
+  }
 }
+
 
 // DELETE PARCEL
 async function deleteParcel() {
@@ -69,13 +109,34 @@ async function deleteParcel() {
     return;
   }
 
-  await fetch("http://127.0.0.1:5000/delete/" + id, {
-    method: "DELETE"
-  });
+  // CONFIRM BEFORE DELETE
+  if (!confirm("Are you sure you want to delete this parcel?")) {
+    return;
+  }
 
-  alert("Parcel deleted successfully");
+  try {
+    let res = await fetch(API + "/delete/" + id, {
+      method: "DELETE"
+    });
 
-  loadParcels();
+    let data = await res.json();
+
+    if (res.ok) {
+      alert(data.message || "Parcel deleted successfully");
+    } else {
+      alert("Delete failed");
+    }
+
+    document.getElementById("deleteId").value = "";
+
+    loadParcels();
+
+  } catch (error) {
+    console.log(error);
+    alert("Error deleting parcel");
+  }
 }
+
+
 // AUTO LOAD
 loadParcels();
