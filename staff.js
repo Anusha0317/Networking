@@ -1,6 +1,6 @@
 const API = "http://127.0.0.1:5000";
 
-// ADD PARCEL
+// ================= ADD PARCEL =================
 async function addParcel() {
 
   let id = document.getElementById("pid").value;
@@ -12,9 +12,9 @@ async function addParcel() {
   }
 
   try {
-    let res = await fetch(API + "/add", {
+    await fetch(API + "/add", {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
+      headers: {"Content-Type": "application/json"},
       body: JSON.stringify({
         parcel_id: id,
         name: name,
@@ -22,23 +22,21 @@ async function addParcel() {
       })
     });
 
-    let data = await res.json();
+    alert("Parcel added successfully");
 
-    alert(data.message || "Parcel added successfully");
-
+    // Clear inputs
     document.getElementById("pid").value = "";
     document.getElementById("name").value = "";
 
     loadParcels();
 
   } catch (error) {
-    console.log(error);
     alert("Error adding parcel");
   }
 }
 
 
-// LOAD PARCELS
+// ================= LOAD PARCELS =================
 async function loadParcels() {
 
   try {
@@ -49,26 +47,32 @@ async function loadParcels() {
 
     for (let i = 0; i < data.length; i++) {
 
-      let statusColor = "black";
+      let statusClass = "";
 
-      if (data[i].status === "Delivered") statusColor = "green";
-      else if (data[i].status === "In Transit") statusColor = "orange";
+      if (data[i].status === "Delivered") {
+        statusClass = "delivered";
+      } else if (data[i].status === "In Transit") {
+        statusClass = "transit";
+      } else {
+        statusClass = "new";
+      }
 
-      text += `<span style="color:${statusColor}">
-                ${data[i].parcel_id} - ${data[i].name} - ${data[i].status}
-               </span><br>`;
+      text += data[i].parcel_id + " - " +
+              data[i].name + " - " +
+              "<span class='" + statusClass + "'>" +
+              data[i].status +
+              "</span><br>";
     }
 
     document.getElementById("list").innerHTML = text;
 
   } catch (error) {
-    console.log(error);
-    alert("Error loading parcels");
+    console.log("Error loading parcels");
   }
 }
 
 
-// UPDATE PARCEL
+// ================= UPDATE STATUS =================
 async function updateParcel() {
 
   let id = document.getElementById("updateId").value;
@@ -80,26 +84,25 @@ async function updateParcel() {
   }
 
   try {
-    let res = await fetch(API + "/update/" + id, {
+    await fetch(API + "/update/" + id, {
       method: "PUT",
-      headers: { "Content-Type": "application/json" },
+      headers: {"Content-Type": "application/json"},
       body: JSON.stringify({ status: status })
     });
 
-    let data = await res.json();
+    alert("Status updated successfully");
 
-    alert(data.message || "Status updated successfully");
+    document.getElementById("updateId").value = "";
 
     loadParcels();
 
   } catch (error) {
-    console.log(error);
-    alert("Error updating parcel");
+    alert("Error updating status");
   }
 }
 
 
-// DELETE PARCEL
+// ================= DELETE PARCEL =================
 async function deleteParcel() {
 
   let id = document.getElementById("deleteId").value;
@@ -109,7 +112,7 @@ async function deleteParcel() {
     return;
   }
 
-  // CONFIRM BEFORE DELETE
+  // Confirmation
   if (!confirm("Are you sure you want to delete this parcel?")) {
     return;
   }
@@ -119,12 +122,10 @@ async function deleteParcel() {
       method: "DELETE"
     });
 
-    let data = await res.json();
-
     if (res.ok) {
-      alert(data.message || "Parcel deleted successfully");
+      alert("Parcel deleted successfully");
     } else {
-      alert("Delete failed");
+      alert("Error deleting parcel");
     }
 
     document.getElementById("deleteId").value = "";
@@ -132,11 +133,16 @@ async function deleteParcel() {
     loadParcels();
 
   } catch (error) {
-    console.log(error);
-    alert("Error deleting parcel");
+    alert("Server error while deleting");
   }
 }
 
 
-// AUTO LOAD
+// ================= NAVIGATION =================
+function goToParcels() {
+  window.location.href = "parcels.html";
+}
+
+
+// ================= AUTO LOAD =================
 loadParcels();
