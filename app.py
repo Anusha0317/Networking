@@ -90,6 +90,16 @@ def delete(pid):
 
     return jsonify({"message": "Deleted"})
 
+from flask import send_from_directory
+
+@app.route("/")
+def home():
+    return send_from_directory(".", "index.html")
+
+@app.route("/staff")
+def staff():
+    return send_from_directory(".", "staff.html")
+
 
 # ALWAYS KEEP THIS LAST
 if __name__ == "__main__":
