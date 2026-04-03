@@ -1,47 +1,45 @@
-<!DOCTYPE html>
-<html>
-<head>
-  <title>Staff Dashboard</title>
-  <link rel="stylesheet" href="style.css">
-</head>
 <body>
 
-<a href="index.html">⬅ Back</a>
+<a href="index.html" class="back">← Back</a>
 
-<h2>Staff Dashboard</h2>
+<div class="container">
 
-<hr>
+  <h1>Staff Dashboard</h1>
 
-<h3>Create New Parcel</h3>
+  <!-- CREATE -->
+  <div class="section">
+    <h3>Create New Parcel</h3>
+    <input id="pid" placeholder="Parcel ID">
+    <input id="name" placeholder="Parcel Name">
+    <button onclick="addParcel()">Add Parcel</button>
+  </div>
 
-<input id="pid" placeholder="Parcel ID">
-<input id="name" placeholder="Parcel Name">
+  <!-- UPDATE -->
+  <div class="section">
+    <h3>Update Parcel Status</h3>
+    <input id="updateId" placeholder="Enter Parcel ID">
 
-<button onclick="addParcel()">Add Parcel</button>
+    <select id="updateStatus">
+      <option>In Transit</option>
+      <option>Out for Delivery</option>
+      <option>Delivered</option>
+    </select>
 
-<hr>
+    <button onclick="updateParcel()">Update Status</button>
+  </div>
 
-<h3>Update Parcel Status</h3>
+  <!-- DELETE -->
+  <div class="section">
+    <h3>Delete Parcel</h3>
+    <input id="deleteId" placeholder="Enter Parcel ID">
+    <button class="delete-btn" onclick="deleteParcel()">Delete Parcel</button>
+    <button onclick="window.location.href='parcels.html'">
+      View All Parcels
+    </button>
+  </div>
 
-<input id="updateId" placeholder="Enter Parcel ID">
+</div>
 
-<select id="updateStatus">
-  <option>In Transit</option>
-  <option>Out for Delivery</option>
-  <option>Delivered</option>
-</select>
-
-<button onclick="updateParcel()">Update Status</button>
-
-<hr>
-
-<h3>Delete Parcel</h3>
-
-<input id="deleteId" placeholder="Enter Parcel ID">
-
-<button onclick="deleteParcel()">Delete Parcel</button>
-<button onclick="goToParcels()">View All Parcels</button>
 <script src="staff.js"></script>
 
 </body>
-</html>
