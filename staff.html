@@ -12,6 +12,31 @@
 
   <h1>Staff Dashboard</h1>
 
+  <!-- 📊 STATS BOX -->
+  <div class="stats">
+
+    <div class="card total">
+      <h2 id="totalCount">0</h2>
+      <p>Total Parcels</p>
+    </div>
+
+    <div class="card delivered">
+      <h2 id="deliveredCount">0</h2>
+      <p>Delivered</p>
+    </div>
+
+    <div class="card transit">
+      <h2 id="transitCount">0</h2>
+      <p>In Transit</p>
+    </div>
+
+    <div class="card out">
+      <h2 id="outCount">0</h2>
+      <p>Out for Delivery</p>
+    </div>
+
+  </div>
+
   <!-- CREATE -->
   <div class="section">
     <h3>Create New Parcel</h3>
@@ -36,26 +61,27 @@
 
   <!-- DELETE -->
   <div class="section">
+    <h3>Delete Parcel</h3>
+    <input id="deleteId" placeholder="Enter Parcel ID">
 
-  <h3>Delete Parcel</h3>
+    <button class="delete-btn" onclick="deleteParcel()">
+      Delete Parcel
+    </button>
+  </div>
 
-  <input id="deleteId" placeholder="Enter Parcel ID">
+  <!-- VIEW -->
+  <div class="section">
+    <h3>View All Parcels</h3>
 
-  <button class="delete-btn" onclick="deleteParcel()">
-    Delete Parcel
-  </button>
-
-</div>
-
-<div class="section">
-
-  <h3>View All Parcels</h3>
-
-  <button onclick="window.location.href='parcels.html'">
-    View All Parcels
-  </button>
+    <button onclick="window.location.href='parcels.html'">
+      View All Parcels
+    </button>
+  </div>
 
 </div>
+
+<!-- JS FILE -->
 <script src="staff.js"></script>
+
 </body>
 </html>
