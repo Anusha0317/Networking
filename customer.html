@@ -6,14 +6,22 @@
 </head>
 <body>
 
-<a href="index.html">⬅ Back</a>
+<a href="index.html" class="back">← Back</a>
 
-<h2>Track Parcel</h2>
+<div class="container">
 
-<input id="trackId" placeholder="Enter Parcel ID">
-<button onclick="trackParcel()">Track</button>
+  <h2>Track Parcel</h2>
 
-<h3 id="result"></h3>
+  <div class="section center">
+    <input id="trackId" placeholder="Enter Parcel ID">
+    <button onclick="trackParcel()">Track</button>
+  </div>
+
+  <div class="section center">
+    <h3 id="result"></h3>
+  </div>
+
+</div>
 
 <script src="customer.js"></script>
 
