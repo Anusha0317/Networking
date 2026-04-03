@@ -12,7 +12,7 @@ async function addParcel() {
   }
 
   try {
-    await fetch(API + "/add", {
+    let res = await fetch(API + "/add", {
       method: "POST",
       headers: {"Content-Type": "application/json"},
       body: JSON.stringify({
@@ -22,16 +22,19 @@ async function addParcel() {
       })
     });
 
-    alert("Parcel added successfully");
+    if (res.ok) {
+      alert("Parcel added successfully");
 
-    // Clear inputs
-    document.getElementById("pid").value = "";
-    document.getElementById("name").value = "";
+      document.getElementById("pid").value = "";
+      document.getElementById("name").value = "";
 
-    loadParcels();
+      loadParcels();
+    } else {
+      alert("Error adding parcel");
+    }
 
   } catch (error) {
-    alert("Error adding parcel");
+    alert("Server not reachable");
   }
 }
 
@@ -45,16 +48,30 @@ async function loadParcels() {
 
     let text = "";
 
+    // 🔢 STATS
+    let total = data.length;
+    let delivered = 0;
+    let transit = 0;
+    let out = 0;
+
     for (let i = 0; i < data.length; i++) {
 
       let statusClass = "";
 
       if (data[i].status === "Delivered") {
-        statusClass = "delivered";
-      } else if (data[i].status === "In Transit") {
-        statusClass = "transit";
-      } else {
-        statusClass = "new";
+        statusClass = "status-delivered";
+        delivered++;
+      } 
+      else if (data[i].status === "In Transit") {
+        statusClass = "status-transit";
+        transit++;
+      } 
+      else if (data[i].status === "Out for Delivery") {
+        statusClass = "status-out";
+        out++;
+      } 
+      else {
+        statusClass = "status-new";
       }
 
       text += data[i].parcel_id + " - " +
@@ -63,6 +80,12 @@ async function loadParcels() {
               data[i].status +
               "</span><br>";
     }
+
+    // 📊 UPDATE STATS UI
+    document.getElementById("totalCount").innerText = total;
+    document.getElementById("deliveredCount").innerText = delivered;
+    document.getElementById("transitCount").innerText = transit;
+    document.getElementById("outCount").innerText = out;
 
     document.getElementById("list").innerHTML = text;
 
@@ -84,20 +107,24 @@ async function updateParcel() {
   }
 
   try {
-    await fetch(API + "/update/" + id, {
+    let res = await fetch(API + "/update/" + id, {
       method: "PUT",
       headers: {"Content-Type": "application/json"},
       body: JSON.stringify({ status: status })
     });
 
-    alert("Status updated successfully");
+    if (res.ok) {
+      alert("Status updated successfully");
 
-    document.getElementById("updateId").value = "";
+      document.getElementById("updateId").value = "";
 
-    loadParcels();
+      loadParcels();
+    } else {
+      alert("Error updating status");
+    }
 
   } catch (error) {
-    alert("Error updating status");
+    alert("Server not reachable");
   }
 }
 
@@ -112,7 +139,6 @@ async function deleteParcel() {
     return;
   }
 
-  // Confirmation
   if (!confirm("Are you sure you want to delete this parcel?")) {
     return;
   }
@@ -133,7 +159,7 @@ async function deleteParcel() {
     loadParcels();
 
   } catch (error) {
-    alert("Server error while deleting");
+    alert("Server not reachable");
   }
 }
 
@@ -145,4 +171,4 @@ function goToParcels() {
 
 
 // ================= AUTO LOAD =================
-loadParcels();
+window.onload = loadParcels;
