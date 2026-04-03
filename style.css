@@ -1,15 +1,80 @@
 body {
-  font-family: Arial;
+  font-family: 'Segoe UI', sans-serif;
+  background: linear-gradient(to right, #eef2f3, #dfe9f3);
+  margin: 0;
+  padding: 0;
+}
+
+.container {
+  width: 60%;
+  margin: 40px auto;
+  background: white;
+  padding: 25px;
+  border-radius: 12px;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+}
+
+h1 {
   text-align: center;
+  color: #333;
 }
 
-input, select, button {
-  padding: 8px;
-  margin: 5px;
+h3 {
+  margin-top: 25px;
+  color: #555;
 }
 
-div {
-  border: 1px solid gray;
-  padding: 8px;
-  margin: 5px;
+input, select {
+  padding: 10px;
+  margin: 8px 5px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  width: 200px;
+}
+
+button {
+  padding: 10px 15px;
+  margin: 8px;
+  border: none;
+  border-radius: 6px;
+  background-color: #4CAF50;
+  color: white;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+button:hover {
+  background-color: #45a049;
+}
+
+/* Delete button */
+button.delete {
+  background-color: #e74c3c;
+}
+
+button.delete:hover {
+  background-color: #c0392b;
+}
+
+/* Parcel list box */
+#list {
+  margin-top: 15px;
+  padding: 15px;
+  background: #f9f9f9;
+  border-radius: 8px;
+  border: 1px solid #ddd;
+}
+
+/* Status colors */
+.delivered {
+  color: green;
+  font-weight: bold;
+}
+
+.transit {
+  color: orange;
+}
+
+.new {
+  color: blue;
 }
