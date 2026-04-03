@@ -214,3 +214,46 @@ tr:hover {
     padding: 20px;
   }
 }
+
+/* ===== STATS BOX ===== */
+.stats {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 15px;
+  margin-bottom: 30px;
+}
+
+.card {
+  padding: 20px;
+  border-radius: 12px;
+  text-align: center;
+  color: white;
+  font-weight: bold;
+  transition: 0.3s;
+}
+
+.card h2 {
+  font-size: 28px;
+  margin-bottom: 5px;
+}
+
+.card p {
+  font-size: 14px;
+}
+
+/* COLORS */
+.total { background: #2196F3; }
+.delivered { background: #4CAF50; }
+.transit { background: #f9a825; }
+.out { background: #fb8c00; }
+
+.card:hover {
+  transform: scale(1.05);
+}
+
+/* MOBILE */
+@media (max-width: 700px) {
+  .stats {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
