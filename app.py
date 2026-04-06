@@ -6,8 +6,6 @@ import os
 app = Flask(__name__)
 CORS(app)
 
-if not os.path.exists("database"):
-    os.makedirs("database")
 # CREATE DATABASE
 def init_db():
     conn = sqlite3.connect("database.db")
@@ -95,4 +93,4 @@ def delete(pid):
 
 # ALWAYS KEEP THIS LAST
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run(host="0.0.0.0", port=5000, debug=True)
