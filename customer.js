@@ -1,4 +1,4 @@
-const API = "http://127.0.0.1:5000";
+const API = "http://52.51.161.199:5000";
 
 // TRACK
 async function trackParcel() {
