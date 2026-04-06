@@ -10,7 +10,7 @@ if not os.path.exists("database"):
     os.makedirs("database")
 # CREATE DATABASE
 def init_db():
-    conn = sqlite3.connect("database/database.db")
+    conn = sqlite3.connect("database.db")
     cursor = conn.cursor()
     cursor.execute("""
     CREATE TABLE IF NOT EXISTS parcels (
@@ -29,7 +29,7 @@ init_db()
 @app.route("/add", methods=["POST"])
 def add():
     data = request.json
-    conn = sqlite3.connect("database/database.db")
+    conn = sqlite3.connect("database.db")
     cursor = conn.cursor()
     cursor.execute("INSERT INTO parcels VALUES (?, ?, ?)",
                    (data["parcel_id"], data["name"], data["status"]))
@@ -41,7 +41,7 @@ def add():
 # GET ALL
 @app.route("/parcels")
 def get_all():
-    conn = sqlite3.connect("database/database.db")
+    conn = sqlite3.connect("database.db")
     cursor = conn.cursor()
     cursor.execute("SELECT * FROM parcels")
     rows = cursor.fetchall()
@@ -57,7 +57,7 @@ def get_all():
 @app.route("/update/<pid>", methods=["PUT"])
 def update(pid):
     data = request.json
-    conn = sqlite3.connect("database/database.db")
+    conn = sqlite3.connect("database.db")
     cursor = conn.cursor()
     cursor.execute("UPDATE parcels SET status=? WHERE parcel_id=?",
                    (data["status"], pid))
@@ -69,7 +69,7 @@ def update(pid):
 # TRACK
 @app.route("/track/<pid>")
 def track(pid):
-    conn = sqlite3.connect("database/database.db")
+    conn = sqlite3.connect("database.db")
     cursor = conn.cursor()
     cursor.execute("SELECT * FROM parcels WHERE parcel_id=?", (pid,))
     row = cursor.fetchone()
@@ -83,7 +83,7 @@ def track(pid):
 # DELETE PARCEL
 @app.route("/delete/<pid>", methods=["DELETE"])
 def delete(pid):
-    conn = sqlite3.connect("database/database.db")
+    conn = sqlite3.connect("database.db")
     cursor = conn.cursor()
 
     cursor.execute("DELETE FROM parcels WHERE parcel_id=?", (pid,))
