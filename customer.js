@@ -1,18 +1,27 @@
 const API = "http://52.51.161.199:5000";
 
-// TRACK
+// ================= TRACK PARCEL =================
 async function trackParcel() {
+    let id = document.getElementById("trackId").value;
 
-  let id = document.getElementById("trackId").value;
+    if (id === "") {
+        alert("Enter Parcel ID");
+        return;
+    }
 
-  let res = await fetch(API + "/track/" + id);
-  let data = await res.json();
+    try {
+        let res = await fetch(API + "/track/" + id);
+        let data = await res.json();
 
-  if (data.status) {
-    document.getElementById("result").innerText =
-      "Status: " + data.status;
-  } else {
-    document.getElementById("result").innerText =
-      "Parcel not found";
-  }
+        if (res.ok) {
+            document.getElementById("result").innerText =
+                "Status: " + data.status;
+        } else {
+            document.getElementById("result").innerText =
+                data.error;
+        }
+
+    } catch (error) {
+        alert("Server not reachable");
+    }
 }
